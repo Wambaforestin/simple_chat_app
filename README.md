@@ -1,6 +1,7 @@
 # simple_chat_app
 
-A new Flutter project.
+A new Flutter project (mini project).
+This project is part of my `flutter learining journey`.
 
 ## Getting Started
 
