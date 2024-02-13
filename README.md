@@ -12,7 +12,8 @@ This chat application allows users to send and receive messages in real-time. It
 
 1. Clone the repository to your local machine.
 2. Open the project in your preferred IDE.
-3. Run the application on an emulator or physical device.
+3. Run `flutter pub get` to install dependencies(Very important).
+4. Run the application on your emulator or physical device using `flutter run`.
 
 ## Technologies Used
 
