@@ -17,7 +17,7 @@ class ChatApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       title: "Simple Chat App",
-      home: const ChatPage(),
+      home:  LoginPage(),
     );
   }
 }
