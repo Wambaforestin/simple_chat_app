@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:simple_chat_app/chat_page.dart';
+import 'package:simple_chat_app/utils/brand_color.dart';
+import 'package:simple_chat_app/utils/spaces.dart';
+import 'package:simple_chat_app/utils/textfield_style.dart';
+import 'package:simple_chat_app/widgets/login_text_field.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   void loginUser(context) {
-    if (_formKey.currentState!=Null && _formKey.currentState!.validate()) {
+    if (_formKey.currentState != Null && _formKey.currentState!.validate()) {
       print('Login Successful!');
       print('Username: ${usernameController.text}');
       print('Password: ${passwordController.text}');
 
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChatPage(
-      username: usernameController.text,
-    )));
-
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ChatPage(
+                    username: usernameController.text,
+                  )));
     } else {
       print('Login Failed!');
     }
@@ -25,105 +32,177 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Login Page"),
+        title: const Text(
+          "Let's sign you in!",
+          style: TextStyle(
+            fontFamily: "ZillaSlab",
+            color: BrandColor.primaryColor,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 0.5,
+          ),
+        ),
         centerTitle: true,
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Text(
-                  "Let's sign you in!",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 24,
-                      color: Color.fromARGB(255, 4, 146, 146),
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 0.5),
-                ),
-                const SizedBox(height: 5),
-                const Text(
-                  textAlign: TextAlign.center,
-                  "Welcome back,\n You've been missed!",
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Color.fromARGB(255, 4, 146, 146),
-                      fontWeight: FontWeight.w300,
-                      letterSpacing: 0.5),
-                ),
-                const SizedBox(height: 5),
-                Image.network(
-                  "https://rixburo.nl/wp-content/uploads/2022/08/Reflectie_illustratie-removebg-preview.png",
-                  height: 200,
-                  width: 200,
-                ),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        validator: (value) {
-                          if (value != Null &&
-                              value!.isNotEmpty &&
-                              value.length < 5) {
-                            return "your unsername should be at least 5 characters long.";
-                          } else if (value != Null && value!.isEmpty) {
-                            return "Username is required";
-                          }
-                          return null;
-                        },
-                        controller: usernameController,
-                        decoration: const InputDecoration(
-                          // labelText: "Username",
-                          hintText: "Enter your username",
-                          hintStyle: TextStyle(
-                            color: Color.fromARGB(255, 3, 150, 150),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.info_outline,
+              color: BrandColor.primaryColor,
+              size: 30,
+            ),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text(
+                      "About Simple Chat App",
+                      style: TextStyle(
+                          color: BrandColor.primaryColor,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.5),
+                    ),
+                    content: const Text(
+                        "Simple Chat App is a simple chat application that allows users to chat with each other. It is built using Flutter and Firebase."),
+                    actions: <Widget>[
+                      Stack(
+                        children: <Widget>[
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: BrandColor.tertiaryColor,
+                              padding: const EdgeInsets.all(10),
+                              textStyle: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            child: const Text(
+                              "Close",
+                              style: TextStyle(
+                                color: Colors.white,
+                                letterSpacing: 0.5,
+                              ),
+                            ),
                           ),
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        controller: passwordController,
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          // labelText: "Password",
-                          hintText: "Enter your password",
-                          hintStyle: TextStyle(
-                            color: Color.fromARGB(255, 4, 146, 146),
-                          ),
-                          border: OutlineInputBorder(),
-                        ),
+                        ],
                       ),
                     ],
+                  );
+                },
+              );
+            },
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              verticalSpace(20),
+              Image.asset(
+                "assets/images/simple_chat_image.png",
+                height: 300,
+                width: 300,
+              ),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    LoginTextField(
+                      hintText: "Enter your username",
+                      validator: (value) {
+                        if (value != null &&
+                            value.isNotEmpty &&
+                            value.length < 5) {
+                          return "Username must be at least 5 characters long";
+                        } else if (value != null && value.isEmpty) {
+                          return "Username cannot be empty";
+                        }
+                        return null;
+                      },
+                      controller: usernameController,
+                    ),
+                    verticalSpace(10),
+                    LoginTextField(
+                      controller: passwordController,
+                      hasAsteriks: true,
+                      hintText: "Enter your password",
+                    ),
+                  ],
+                ),
+              ),
+              verticalSpace(10),
+              ElevatedButton(
+                onPressed: () => loginUser(context),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 4, 146, 146),
+                  padding: const EdgeInsets.all(10),
+                  textStyle: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 10),
-                ElevatedButton(
-                    onPressed: () => loginUser(context),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 4, 146, 146),
-                    padding: const EdgeInsets.all(10),
-                    textStyle: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                child: const Text(
+                  "Login",
+                  style: TextStyle(
+                    color: Colors.white,
+                    letterSpacing: 0.5,
                   ),
-                  child: const Text(
-                    "Login",
+                ),
+              ),
+              verticalSpace(50),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  verticalSpace(10),
+                  const Text(
+                    "Find us on social media",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: BrandColor.tertiaryColor,
+                      fontWeight: FontWeight.bold,
                       letterSpacing: 0.5,
                     ),
                   ),
-                )
-              ],
-            ),
+                  verticalSpace(10),
+                  GestureDetector(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          "assets/images/github.svg",
+                          height: 25,
+                          width: 25,
+                          color: Colors.black,
+                        ),
+                        horizontalSpace(10),
+                        SvgPicture.asset(
+                          "assets/images/twitter.svg",
+                          height: 25,
+                          width: 25,
+                          color: Colors.blue,
+                        ),
+                        horizontalSpace(10),
+                        SvgPicture.asset(
+                          "assets/images/linkedin.svg",
+                          height: 25,
+                          width: 25,
+                          color: Colors.blueAccent,
+                        ),
+                      ],
+                    ),
+                    onTap: () {
+                      print("Find us on social media");
+                    },
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

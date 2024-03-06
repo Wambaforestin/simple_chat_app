@@ -1,40 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:simple_chat_app/models/chat_message_entity.dart';
 
 class ChatBubble extends StatelessWidget {
-  const ChatBubble(Alignment centerLeft, {Key? key, required this.alignment, required this.message})
-      : super(key: key);
-
+  final ChatMessageEntity entity;
   final Alignment alignment;
-  final String message;
+
+  const ChatBubble({Key? key, required this.alignment, required this.entity})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: alignment,
       child: Container(
-        // creating the chat bubbles
+        // width: MediaQuery.of(context).size.width * 0.5,
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width * 0.5,
+        ),
         padding: const EdgeInsets.all(24),
         margin: const EdgeInsets.all(50),
         decoration: const BoxDecoration(
-          color: Color.fromARGB(255, 190, 255, 252),
+          color: Color.fromARGB(255, 144, 190, 188),
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-            bottomLeft: Radius.circular(20),
+            topLeft: Radius.circular(12),
+            topRight: Radius.circular(12),
+            bottomLeft: Radius.circular(12),
           ),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              '$message',
-              style: const TextStyle(fontSize: 15),
+              '${entity.text}',
+              style: const TextStyle(
+                  fontSize: 20, color: Colors.white, fontFamily: 'ZillaSlab'),
             ),
-            Image.network(
-              "https://www.w3schools.com/w3images/lights.jpg",
-              height: 200,
-              width: 200,
-            ),
+            if (entity.imageUrl != null)
+              Image.network(
+                '${entity.imageUrl}',
+                height: 200,
+              )
           ],
         ),
       ),

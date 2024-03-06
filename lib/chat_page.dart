@@ -1,19 +1,61 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:simple_chat_app/login_page.dart';
+import 'package:simple_chat_app/models/chat_message_entity.dart';
 import 'package:simple_chat_app/widgets/chat_bubble.dart';
 import 'package:simple_chat_app/widgets/chat_input.dart';
 
-class ChatPage extends StatelessWidget {
+class ChatPage extends StatefulWidget {
   const ChatPage({super.key, required this.username});
   final String username;
+
+  @override
+  State<ChatPage> createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
+  // initial messages
+  List<ChatMessageEntity> _messages = [
+    // Empty list of messages
+  ];
+  _loadInitialMessages() async {
+    // Load initial messages from the the json file in the assets folder
+    final response = await rootBundle.loadString(
+        'assets/default_messages.json'); //<- the file path for the json file
+    // print(response);
+    final List<dynamic> decodedlist = jsonDecode(response) as List;
+
+    final List<ChatMessageEntity> _chatMessages = decodedlist.map((listItem) {
+      return ChatMessageEntity.fromJson(listItem);
+    }).toList();
+
+    print(_chatMessages.length);
+    // final state of the messages
+    setState(() {
+      _messages = _chatMessages;
+    });
+  }
+
+  @override
+  void initState() {
+    _loadInitialMessages();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 4, 146, 146),
         title: Text(
-          'Chat App - $username!',
-          style: const TextStyle(color: Colors.white),
+          'Chat App - ${widget.username}😊',
+          style: const TextStyle(
+              color: Colors.white,
+              fontFamily: 'ZillaSlab',
+              fontSize: 20,
+              fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         actions: [
@@ -30,18 +72,18 @@ class ChatPage extends StatelessWidget {
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (BuildContext context, int index) {
+              itemCount: _messages.length,
+              itemBuilder: (context, index) {
                 return ChatBubble(
-                  Alignment.centerLeft,
-                  alignment: (index % 2 == 0)
-                      ? Alignment.centerLeft
-                      : Alignment.centerRight,
-                  message: "Hello!",
+                  alignment: _messages[index].author.userName == 'forestin'
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft,
+                  entity: _messages[index],
                 );
               },
             ),
           ),
+          // Chat input
           ChatInput(),
         ],
       ),
