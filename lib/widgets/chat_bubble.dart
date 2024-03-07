@@ -30,11 +30,14 @@ class ChatBubble extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              '${entity.text}',
-              style: const TextStyle(
-                  fontSize: 20, color: Colors.white, fontFamily: 'ZillaSlab'),
-            ),
+            if (entity.text.isNotEmpty)
+              Text(
+                '${entity.text}',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+              ),
             if (entity.imageUrl != null)
               Image.network(
                 '${entity.imageUrl}',

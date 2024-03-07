@@ -22,19 +22,26 @@ class _ChatPageState extends State<ChatPage> {
   ];
   _loadInitialMessages() async {
     // Load initial messages from the the json file in the assets folder
-    final response = await rootBundle.loadString(
-        'assets/default_messages.json'); //<- the file path for the json file
-    // print(response);
-    final List<dynamic> decodedlist = jsonDecode(response) as List;
+    rootBundle.loadString('assets/default_messages.json').then((response) {
+      // print(response);
+      final List<dynamic> decodedlist = jsonDecode(response) as List;
 
-    final List<ChatMessageEntity> _chatMessages = decodedlist.map((listItem) {
-      return ChatMessageEntity.fromJson(listItem);
-    }).toList();
+      final List<ChatMessageEntity> _chatMessages = decodedlist.map((listItem) {
+        return ChatMessageEntity.fromJson(listItem);
+      }).toList();
 
-    print(_chatMessages.length);
-    // final state of the messages
+      print(_chatMessages.length);
+      // final state of the messages
+      setState(() {
+        _messages = _chatMessages;
+      });
+    }); //<- the file path for the json file
+  }
+
+  sendMessage(ChatMessageEntity newChatMessage) {
+    print('Message Sent: ${newChatMessage.text}');
     setState(() {
-      _messages = _chatMessages;
+      _messages.add(newChatMessage);
     });
   }
 
@@ -84,7 +91,9 @@ class _ChatPageState extends State<ChatPage> {
             ),
           ),
           // Chat input
-          ChatInput(),
+          ChatInput(
+            onSendMessage: sendMessage,
+          ),
         ],
       ),
     );
