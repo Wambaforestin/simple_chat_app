@@ -21,7 +21,8 @@ class PixelformImage {
       required this.urlFullSize,
       required this.urlSmallSize});
 
-       factory PixelformImage.fromJson(Map<String, dynamic> json) => _$PixelformImageFromJson(json);
+  factory PixelformImage.fromJson(Map<String, dynamic> json) =>
+      _$PixelformImageFromJson(json);
 
   /// Connect the generated [_$PersonToJson] function to the `toJson` method.
   Map<String, dynamic> toJson() => _$PixelformImageToJson(this);

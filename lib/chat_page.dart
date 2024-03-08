@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:simple_chat_app/login_page.dart';
 import 'package:simple_chat_app/models/chat_message_entity.dart';
+import 'package:simple_chat_app/models/images_model.dart';
+import 'package:simple_chat_app/repo/image_repository.dart';
 import 'package:simple_chat_app/widgets/chat_bubble.dart';
 import 'package:simple_chat_app/widgets/chat_input.dart';
+import 'package:http/http.dart' as http;
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key, required this.username});
@@ -38,12 +41,17 @@ class _ChatPageState extends State<ChatPage> {
     }); //<- the file path for the json file
   }
 
+//  the sendMessage method is used to add a new message to the list of messages
   sendMessage(ChatMessageEntity newChatMessage) {
     print('Message Sent: ${newChatMessage.text}');
     setState(() {
       _messages.add(newChatMessage);
     });
   }
+
+// getting the network image from the API
+ 
+ final ImageRepository _imageRepository = ImageRepository();
 
   @override
   void initState() {
@@ -77,6 +85,29 @@ class _ChatPageState extends State<ChatPage> {
       ),
       body: Column(
         children: [
+          FutureBuilder<List<PixelformImage>>(
+            future: _imageRepository.getNetworkImages(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text('Error: ${snapshot.error}'),
+                );
+              } else {
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      return Image.network(snapshot.data![index].urlFullSize);
+                    },
+                  ),
+                );
+              }
+            },
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: _messages.length,
