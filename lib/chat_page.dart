@@ -85,37 +85,7 @@ class _ChatPageState extends State<ChatPage> {
       ),
       body: Column(
         children: [
-          FutureBuilder<List<PixelformImage>>(
-            future: _imageRepository.getNetworkImages(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (snapshot.hasError) {
-                return Center(
-                  child: Text(
-                    'Error: ${snapshot.error}',
-                    style: const TextStyle(
-                      color: Colors.red,
-                      fontSize: 5,
-                      fontWeight: FontWeight.bold,  
-                    
-                    ),
-                  ),
-                );
-              } else {
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      return Image.network(snapshot.data![index].urlFullSize);
-                    },
-                   ),
-                );
-              }
-            },
-          ),
+          
           Expanded(
             child: ListView.builder(
               itemCount: _messages.length,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simple_chat_app/models/chat_message_entity.dart';
+import 'package:simple_chat_app/utils/brand_color.dart';
+import 'package:simple_chat_app/widgets/picker_body.dart';
 
 class ChatInput extends StatelessWidget {
   final Function(ChatMessageEntity) onSendMessage;
@@ -36,15 +38,11 @@ class ChatInput extends StatelessWidget {
             icon: const Icon(Icons.add, color: Colors.white),
             onPressed: () {
               showModalBottomSheet(
+                barrierColor: Colors.black.withOpacity(0.5),
+                backgroundColor:BrandColor.quaternaryColor,
                 context: context,
                 builder: (BuildContext context) {
-                  return Container(
-                    height: 200,
-                    color: Colors.white,
-                    child: const Center(
-                      child: Text('Add a photo'),
-                    ),
-                  );
+                  return NetworkImagePickerBody();
                 },
               );
             },
