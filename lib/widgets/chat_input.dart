@@ -34,7 +34,20 @@ class ChatInput extends StatelessWidget {
         children: [
           IconButton(
             icon: const Icon(Icons.add, color: Colors.white),
-            onPressed: () {},
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return Container(
+                    height: 200,
+                    color: Colors.white,
+                    child: const Center(
+                      child: Text('Add a photo'),
+                    ),
+                  );
+                },
+              );
+            },
           ),
           IconButton(
             icon: const Icon(Icons.camera_alt, color: Colors.white),

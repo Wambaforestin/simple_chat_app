@@ -94,7 +94,15 @@ class _ChatPageState extends State<ChatPage> {
                 );
               } else if (snapshot.hasError) {
                 return Center(
-                  child: Text('Error: ${snapshot.error}'),
+                  child: Text(
+                    'Error: ${snapshot.error}',
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontSize: 5,
+                      fontWeight: FontWeight.bold,  
+                    
+                    ),
+                  ),
                 );
               } else {
                 return Expanded(
@@ -103,7 +111,7 @@ class _ChatPageState extends State<ChatPage> {
                     itemBuilder: (context, index) {
                       return Image.network(snapshot.data![index].urlFullSize);
                     },
-                  ),
+                   ),
                 );
               }
             },
