@@ -5,7 +5,9 @@ import 'package:simple_chat_app/utils/brand_color.dart';
 
 class NetworkImagePickerBody extends StatelessWidget {
   final ImageRepository imageRepository = ImageRepository();
-  NetworkImagePickerBody({super.key});
+  NetworkImagePickerBody({super.key, required this.onImageSelected});
+
+  final Function(String) onImageSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -14,27 +16,28 @@ class NetworkImagePickerBody extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return GridView.builder(
-             itemCount: 7,
-             itemBuilder: (context, index) {
-               return  Center(
-                 child: CircularProgressIndicator(
-                   color: BrandColor.primaryColor,
-                 ),
-               );
-             },
-             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-               crossAxisCount: 2,
-               mainAxisSpacing: 2,
-               mainAxisExtent: MediaQuery.of(context).size.height * 0.5,
-             ),
-           );
+            // itemCount: snapshot.data!.length,
+            itemCount: 7,
+            itemBuilder: (context, index) {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: BrandColor.primaryColor,
+                ),
+              );
+            },
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 2,
+              mainAxisExtent: MediaQuery.of(context).size.height * 0.5,
+            ),
+          );
         } else if (snapshot.hasError) {
           return Center(
             child: Text(
               'Error: ${snapshot.error}',
               style: const TextStyle(
                 color: Colors.red,
-                fontSize: 5,
+                fontSize: 10,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -45,7 +48,14 @@ class NetworkImagePickerBody extends StatelessWidget {
               itemCount: 7,
               // itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                return Image.network(snapshot.data![index].urlFullSize);
+                return GestureDetector(
+                  child: Image.network(snapshot.data![index].urlFullSize),
+                  onTap: () {
+                    onImageSelected(
+                      snapshot.data![index].urlFullSize,
+                    );
+                  },
+                );
               },
               // the giridDelegate is used to define the layout of the grid
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
