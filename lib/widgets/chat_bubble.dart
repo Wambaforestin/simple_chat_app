@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_chat_app/models/chat_message_entity.dart';
+import 'package:simple_chat_app/utils/brand_color.dart';
 
 class ChatBubble extends StatelessWidget {
   final ChatMessageEntity entity;
@@ -10,17 +11,18 @@ class ChatBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isAuthor = entity.author.userName == 'forestin';
     return Align(
       alignment: alignment,
       child: Container(
         // width: MediaQuery.of(context).size.width * 0.5,
         constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width * 0.5,
+          maxWidth: MediaQuery.of(context).size.width * 0.6,
         ),
-        padding: const EdgeInsets.all(24),
-        margin: const EdgeInsets.all(50),
-        decoration: const BoxDecoration(
-          color: Color.fromARGB(255, 144, 190, 188),
+        padding: const EdgeInsets.all(15),
+        margin: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: isAuthor ? BrandColor.primaryColor : BrandColor.tertiaryColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(12),
             topRight: Radius.circular(12),
@@ -39,9 +41,16 @@ class ChatBubble extends StatelessWidget {
                 ),
               ),
             if (entity.imageUrl != null)
-              Image.network(
-                '${entity.imageUrl}',
+              Container(
                 height: 200,
+              width: MediaQuery.of(context).size.width * 0.5,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage('${entity.imageUrl}'),
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: BorderRadius.circular(15),
+                ),
               )
           ],
         ),
