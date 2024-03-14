@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:simple_chat_app/chat_page.dart';
 import 'package:simple_chat_app/utils/brand_color.dart';
 import 'package:simple_chat_app/utils/spaces.dart';
-import 'package:simple_chat_app/utils/textfield_style.dart';
 import 'package:simple_chat_app/widgets/login_text_field.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -178,6 +177,7 @@ class LoginPage extends StatelessWidget {
                           "assets/images/github.svg",
                           height: 25,
                           width: 25,
+                          // ignore: deprecated_member_use
                           color: Colors.black,
                         ),
                         horizontalSpace(10),

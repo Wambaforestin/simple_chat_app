@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_chat_app/models/chat_message_entity.dart';
+import 'package:simple_chat_app/services/authentication_service.dart';
 import 'package:simple_chat_app/utils/brand_color.dart';
 import 'package:simple_chat_app/widgets/picker_body.dart';
 
@@ -22,7 +24,8 @@ class _ChatInputState extends State<ChatInput> {
       text: chatMessageController.text,
       id: '1',
       createdAt: DateTime.now().millisecondsSinceEpoch,
-      author: Author(userName: 'forestin'),
+      // here we get the username from the AuthenticationService using the Provider package
+      author: Author(userName: context.read<AuthenticationService>().getUserName()),
     );
     if (_newImageUrl.isNotEmpty) {
       newChatMessage.imageUrl = _newImageUrl;
