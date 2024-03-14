@@ -33,12 +33,19 @@ class NetworkImagePickerBody extends StatelessWidget {
           );
         } else if (snapshot.hasError) {
           return Center(
-            child: Text(
-              'Error: ${snapshot.error}',
-              style: const TextStyle(
-                color: Colors.red,
-                fontSize: 10,
-                fontWeight: FontWeight.bold,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                'Possible error : ${snapshot.error}',
+                style: const TextStyle(
+                  color: Colors.red,
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                ),
+                
               ),
             ),
           );
