@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_chat_app/chat_page.dart';
+import 'package:simple_chat_app/services/authentication_service.dart';
 import 'package:simple_chat_app/utils/brand_color.dart';
 import 'package:simple_chat_app/utils/spaces.dart';
 import 'package:simple_chat_app/widgets/login_text_field.dart';
@@ -8,11 +10,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  void loginUser(context) {
+  Future<void> loginUser(BuildContext context) async {
     if (_formKey.currentState != Null && _formKey.currentState!.validate()) {
       print('Login Successful!');
       print('Username: ${usernameController.text}');
       print('Password: ${passwordController.text}');
+
+     await context.read<AuthenticationService>().login(
+            usernameController.text,
+            passwordController.text,
+          );
 
       Navigator.pushReplacement(
           context,
@@ -138,7 +145,9 @@ class LoginPage extends StatelessWidget {
               ),
               verticalSpace(10),
               ElevatedButton(
-                onPressed: () => loginUser(context),
+                onPressed: () async {
+                 await loginUser(context);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 4, 146, 146),
                   padding: const EdgeInsets.all(10),

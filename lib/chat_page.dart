@@ -79,6 +79,7 @@ class _ChatPageState extends State<ChatPage> {
           IconButton(
             icon: const Icon(Icons.exit_to_app, color: Colors.white),
             onPressed: () {
+              context.read<AuthenticationService>().logout();
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => LoginPage()));
             },

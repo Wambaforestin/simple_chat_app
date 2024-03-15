@@ -17,7 +17,8 @@ class _ChatInputState extends State<ChatInput> {
   final TextEditingController chatMessageController = TextEditingController();
 
   String _newImageUrl = '';
-  void sendMessage() {
+  Future<void> sendMessage() async {
+    String? userNameFromCache = await context.read<AuthenticationService>().getUserName();
     print('Message Sent: ${chatMessageController.text}');
 
     final newChatMessage = ChatMessageEntity(
@@ -25,7 +26,7 @@ class _ChatInputState extends State<ChatInput> {
       id: '1',
       createdAt: DateTime.now().millisecondsSinceEpoch,
       // here we get the username from the AuthenticationService using the Provider package
-      author: Author(userName: context.read<AuthenticationService>().getUserName()),
+      author: Author(userName: userNameFromCache!), //<- get the username from the AuthenticationService
     );
     if (_newImageUrl.isNotEmpty) {
       newChatMessage.imageUrl = _newImageUrl;

@@ -1,13 +1,30 @@
-// Fake authentication service...  
+import 'package:shared_preferences/shared_preferences.dart';
+
+// Fake authentication service...
 //This section is a fake authentication service that returns a hardcoded username.
 //we used the Provider package to provide the AuthenticationService to the rest of the app.
 class AuthenticationService {
-  void login() {}
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  Future<void> login(String userName, String password) async {
+    // login logic...
+    try {
+      SharedPreferences sharedPrefs = await _prefs;
+      sharedPrefs.setString('username', userName);
+    } catch (e) {
+      print(e);
+    }
+  }
 
-  void logout() {}
+  void logout() async {
+    // logout logic...
+    SharedPreferences sharedPrefs = await _prefs;
+      sharedPrefs.remove('username');
+  
+  }
 
-  String getUserName() {
-    return 'forestin';
+  Future<String?> getUserName() async {
+    SharedPreferences sharedPrefs = await _prefs;
+    return sharedPrefs.getString('username') ?? 'Guest';
   }
 }
 

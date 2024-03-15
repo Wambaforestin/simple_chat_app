@@ -5,10 +5,15 @@ import 'package:simple_chat_app/utils/brand_color.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(Provider(create: (BuildContext context) { 
-    return AuthenticationService();
-   },
-  child: const ChatApp(),),);
+  runApp(
+    // Wrap the entire app in the Provider widget : The provider package is used to provide the AuthenticationService to the rest of the app, avoiding the need to pass the AuthenticationService down the widget tree manually.
+    Provider(
+      create: (BuildContext context) {
+        return AuthenticationService();
+      },
+      child: const ChatApp(),
+    ),
+  );
 }
 
 class ChatApp extends StatelessWidget {
@@ -22,9 +27,7 @@ class ChatApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       title: "Simple Chat App",
-      home:  LoginPage(),
+      home: LoginPage(),
     );
   }
 }
-
-
