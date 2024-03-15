@@ -2,7 +2,7 @@
 
 A new Flutter project (mini project). This project is part of my `flutter learining journey`.
 
-![Project Result](assets/images/mobile%20view.jpg)
+![Project Result](assets/images/mobile%20view)
 
 ## Description
 
