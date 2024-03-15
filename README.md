@@ -2,7 +2,7 @@
 
 A new Flutter project (mini project). This project is part of my `flutter learining journey`.
 
-<img src="assets/images/mobile view.jpg" width="300" height="300">
+<img src="assets/images/mobile view.jpg" width="320" height="550">
 
 ## Description
 
