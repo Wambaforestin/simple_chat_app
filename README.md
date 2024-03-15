@@ -2,7 +2,7 @@
 
 A new Flutter project (mini project). This project is part of my `flutter learining journey`.
 
-![Project Result](assets/screenshots/project_result.png)
+![Project Result](assets/images/mobile%20view.jpg)
 
 ## Description
 
@@ -27,8 +27,8 @@ This chat application allows users to send and receive messages in real-time. It
 
 ## Screenshots
 
-![Screenshot 1](assets/screenshots/screenshot_1.png)
-![Screenshot 2](assets/screenshots/screenshot_2.png)
+![Screenshot 1](assets/images/web%20view.jpg)
+![Screenshot 2](assets/images/web+mobile%20view.jpg)
 
 ## Contributions
 
@@ -43,9 +43,5 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 ---
-Created by WAMBA Forestin
+Created by WAMBA Forestin 
