@@ -6,7 +6,7 @@ A new Flutter project (mini project). This project is part of my `flutter learin
 
 ## Description
 
-This chat application allows users to send and receive messages in real-time. It provides a simple and intuitive interface for communication.
+Simple Chat App is a simple chat application that allows you to talk to your self, that's it  demonstrates how a basic chat application works. It was built using Flutter and Dart. Additionally, it uses an api to load images that the user can load while chatting
 
 ## How to Use
 
