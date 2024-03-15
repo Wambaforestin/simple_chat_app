@@ -4,7 +4,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 //This section is a fake authentication service that returns a hardcoded username.
 //we used the Provider package to provide the AuthenticationService to the rest of the app.
 class AuthenticationService {
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  static init() async {
+    _prefs = await SharedPreferences.getInstance();
+  }
+
+  static late final SharedPreferences _prefs;
   Future<void> login(String userName, String password) async {
     // login logic...
     try {
@@ -15,16 +19,26 @@ class AuthenticationService {
     }
   }
 
-  void logout() async {
-    // logout logic...
-    SharedPreferences sharedPrefs = await _prefs;
-      sharedPrefs.remove('username');
-  
+  Future<bool> isLoggedIn() async {
+    String? username = await _prefs.getString('username');
+    if (username != null) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  Future<String?> getUserName() async {
-    SharedPreferences sharedPrefs = await _prefs;
-    return sharedPrefs.getString('username') ?? 'Guest';
+  void logout() {
+    // logout logic...
+    _prefs.clear();
+  }
+
+  getUserName() {
+    return _prefs.getString('username') ?? 'Guest';
+  }
+
+  void updateUserName(String userName) {
+    // to be implimented..
   }
 }
 

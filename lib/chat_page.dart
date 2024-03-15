@@ -5,12 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_chat_app/login_page.dart';
 import 'package:simple_chat_app/models/chat_message_entity.dart';
-import 'package:simple_chat_app/models/images_model.dart';
-import 'package:simple_chat_app/repo/image_repository.dart';
 import 'package:simple_chat_app/services/authentication_service.dart';
 import 'package:simple_chat_app/widgets/chat_bubble.dart';
 import 'package:simple_chat_app/widgets/chat_input.dart';
-import 'package:http/http.dart' as http;
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key, required this.username});
@@ -52,8 +49,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
 // getting the network image from the API
- 
- final ImageRepository _imageRepository = ImageRepository();
+// Remove the unused field '_imageRepository'
 
   @override
   void initState() {
